@@ -1,0 +1,482 @@
+<html><head><base href="/" />
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+<style>
+:root {
+  --primary: #2962ff;
+  --secondary: #7b1fa2;
+  --accent: #00b8d4;
+  --text: #333;
+  --bg: #fafafa;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+  line-height: 1.6;
+  color: var(--text);
+  background: var(--bg);
+  overflow-x: hidden;
+}
+
+section {
+  padding: 5rem 2rem;
+}
+
+.hero {
+  min-height: 100vh;
+  background: linear-gradient(45deg, var(--primary), var(--secondary));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-content {
+  text-align: center;
+  color: white;
+  padding: 2rem;
+  z-index: 1;
+  max-width: 800px;
+}
+
+.hero-title {
+  font-size: 3.5rem;
+  margin-bottom: 1rem;
+  animation: glow 2s ease-in-out infinite;
+}
+
+.hero-info {
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+}
+
+.hero-description {
+  font-size: 1.1rem;
+  margin-top: 2rem;
+  padding: 1rem;
+  background: rgba(255,255,255,0.1);
+  border-radius: 10px;
+}
+
+.circuit-animation {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.1;
+}
+
+.objectives {
+  background: white;
+}
+
+.section-title {
+  text-align: center;
+  font-size: 2.5rem;
+  margin-bottom: 3rem;
+  color: var(--primary);
+}
+
+.objectives-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.objective-card {
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  transition: all 0.3s ease;
+  background: white;
+}
+
+.objective-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+}
+
+.objective-card h3 {
+  color: var(--secondary);
+  margin-bottom: 1rem;
+}
+
+.about-section {
+  background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+}
+
+.about-content {
+  max-width: 800px;
+  margin: 0 auto;
+  background: white;
+  padding: 2rem;
+  border-radius: 15px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.mission-list {
+  list-style: none;
+  margin-top: 2rem;
+}
+
+.mission-list li {
+  padding: 1rem;
+  margin: 1rem 0;
+  border-left: 4px solid var(--accent);
+  background: rgba(0,184,212,0.1);
+}
+
+.certificate-section {
+  background: linear-gradient(135deg, var(--secondary), var(--primary));
+  color: white;
+}
+
+.form-container {
+  max-width: 600px;
+  margin: 0 auto;
+  background: rgba(255,255,255,0.1);
+  padding: 2rem;
+  border-radius: 15px;
+  backdrop-filter: blur(10px);
+}
+
+input {
+  width: 100%;
+  padding: 1rem;
+  margin: 0.5rem 0;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+}
+
+button {
+  width: 100%;
+  background: var(--accent);
+  color: white;
+  padding: 1rem 2rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 1.1rem;
+  font-weight: bold;
+  margin-top: 1rem;
+}
+
+button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+.contact-section {
+  background: white;
+  text-align: center;
+}
+
+.social-links {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.social-links a {
+  font-size: 2rem;
+  color: var(--primary);
+  transition: transform 0.3s ease;
+}
+
+.social-links a:hover {
+  transform: scale(1.2);
+}
+
+@keyframes glow {
+  0%, 100% { text-shadow: 0 0 20px rgba(255,255,255,0.5); }
+  50% { text-shadow: 0 0 30px rgba(255,255,255,0.8); }
+}
+
+.rotating-image {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  width: 100px;
+  height: 100px;
+  animation: rotate 10s linear infinite;
+}
+
+@keyframes rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.star {
+  position: fixed;
+  width: 4px; /* Increased size */
+  height: 4px; /* Increased size */
+  background: rgba(41,98,255,0.9); /* More vivid blue and higher opacity */
+  border-radius: 50%;
+  pointer-events: none;
+  animation: starFloat 15s linear infinite;
+  z-index: 1000;
+  box-shadow: 0 0 10px rgba(41,98,255,0.8); /* Added glow effect */
+}
+
+@keyframes starFloat {
+  0% {
+    transform: translateY(-100%) translateX(-100%) rotate(0deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100vh) translateX(100vw) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+.cursor-light {
+  width: 40px; /* Increased size */
+  height: 40px; /* Increased size */
+  background: radial-gradient(circle, rgba(41,98,255,0.8) 0%, rgba(41,98,255,0) 70%); /* More vivid glow */
+  border-radius: 50%;
+  position: fixed;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  z-index: 9999;
+  box-shadow: 0 0 20px rgba(41,98,255,0.6); /* Added extra glow */
+}
+
+@media (max-width: 600px) {
+  .hero-title {
+    font-size: 2.5rem;
+  }
+  .section-title {
+    font-size: 2rem;
+  }
+  .rotating-image {
+    width: 80px;
+    height: 80px;
+  }
+}
+
+.rotating-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100px;
+  height: 100px;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.rotating-image img {
+  width: 100%;
+  height: 100%;
+  animation: rotate 5s linear infinite;
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 600px) {
+  .hero-title {
+    font-size: 2.5rem;
+  }
+  .section-title {
+    font-size: 2rem;
+  }
+}
+
+</style>
+</head>
+<body>
+
+<img src="IMG-20240412-WA0066-removebg-preview.png" alt="Logo HETEC" class="rotating-image">
+
+<section class="hero">
+  <svg class="circuit-animation" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000">
+    <path d="M0,500 Q250,400 500,500 T1000,500" stroke="white" fill="none" stroke-width="2">
+      <animate attributeName="d" 
+               dur="10s" 
+               repeatCount="indefinite"
+               values="M0,500 Q250,400 500,500 T1000,500;
+                      M0,500 Q250,600 500,500 T1000,500;
+                      M0,500 Q250,400 500,500 T1000,500"/>
+    </path>
+  </svg>
+  
+  <div class="hero-content">
+    <h1 class="hero-title">Initiation à l'IA Générative</h1>
+    <div class="hero-info">
+      <p>📅 Samedi 30 novembre 2024</p>
+      <p>🕗 08h</p>
+      <p>📍 Campus HETEC Abidjan, près de l'arrêt Dokui</p>
+    </div>
+    <div class="hero-description">
+      <p>Découvrez comment l'IA Générative transforme nos métiers et notre quotidien. Une opportunité unique d'explorer une technologie révolutionnaire, que vous soyez élève, étudiant ou professionnel.</p>
+    </div>
+  </div>
+</section>
+
+<section class="objectives">
+  <h2 class="section-title">Objectifs de la conférence</h2>
+  <div class="objectives-grid">
+    <div class="objective-card">
+      <h3>🎯 Comprendre l'IA</h3>
+      <p>Explorez les principes fondamentaux et le fonctionnement de l'IA Générative. Plongez dans les concepts clés qui révolutionnent notre monde.</p>
+    </div>
+    <div class="objective-card">
+      <h3>💡 Innover</h3>
+      <p>Découvrez des cas pratiques concrets et inspirez-vous des innovations majeures qui transforment les industries.</p>
+    </div>
+    <div class="objective-card">
+      <h3>🤝 Réseauter</h3>
+      <p>Échangez avec des experts du domaine et enrichissez vos connaissances à travers des discussions passionnantes.</p>
+    </div>
+  </div>
+</section>
+
+<section class="about-section">
+  <h2 class="section-title">À propos de l'organisation</h2>
+  <div class="about-content">
+    <ul class="mission-list">
+      <li><strong>Mission :</strong> Développer la sensibilisation et l'accès à la technologie pour tous.</li>
+      <li><strong>Vision :</strong> Construire un avenir où innovation et éducation marchent main dans la main.</li>
+      <li><strong>Engagement :</strong> Offrir des opportunités aux jeunes et professionnels en Côte d'Ivoire.</li>
+    </ul>
+  </div>
+</section>
+
+<section class="certificate-section">
+  <h2 class="section-title">Générer votre certificat</h2>
+  <div class="form-container">
+    <form id="certificateForm">
+      <input type="text" placeholder="Prénom" required>
+      <input type="text" placeholder="Nom" required>
+      <input type="email" placeholder="Email" required>
+      <button type="submit">Générer mon certificat</button>
+    </form>
+  </div>
+</section>
+
+<section class="contact-section">
+  <h2 class="section-title">Contactez-nous</h2>
+  <p>Email: contact@hetec.ci</p>
+  <p>Téléphone: +225 07 07 07 07 07</p>
+  <div class="social-links">
+    <a href="https://facebook.com/hetec"><i class="fab fa-facebook"></i></a>
+    <a href="https://twitter.com/hetec"><i class="fab fa-twitter"></i></a>
+    <a href="https://linkedin.com/company/hetec"><i class="fab fa-linkedin"></i></a>
+  </div>
+</section>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script>
+
+document.getElementById('certificateForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const firstName = e.target[0].value;
+  const lastName = e.target[1].value;
+   const email = e.target[2].value;
+
+  const response = await fetch('https://istechconferance-1.onrender.com/generate-pdf', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ firstName, lastName,email }),
+  });
+console.log(response)
+  if (response.ok) {
+    const blob = await response.blob();
+    console.log('Blob récupéré :', blob);  // Vérifiez ici le blob reçu
+    const url = URL.createObjectURL(blob);
+    console.log(url)
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = "certificat.pdf";
+    a.click();
+  } else {
+    alert("Erreur lors de la génération du certificat");
+  }
+});
+
+window.addEventListener("DOMContentLoaded", () => {
+    // Sélectionner l'image
+    const image = document.querySelector(".rotating-image");
+
+    // Animation GSAP
+    gsap.from(image, {
+      y: window.innerHeight, // Part de la hauteur de l'écran
+      duration: 2,           // Durée de 2 secondes
+      ease: "power3.out",    // Effet de transition fluide
+    });
+  });
+
+
+// Enhanced cursor light effect
+function createCursorLight() {
+  const light = document.createElement('div');
+  light.className = 'cursor-light';
+  document.body.appendChild(light);
+  
+  document.addEventListener('mousemove', (e) => {
+    light.style.left = e.clientX + 'px';
+    light.style.top = e.clientY + 'px';
+  });
+}
+
+// Enhanced star creation function
+function createStars() {
+  const numberOfStars = 200; // Increased number of stars
+  
+  setInterval(() => {
+    const star = document.createElement('div');
+    star.className = 'star';
+    
+    // Random starting position
+    star.style.left = Math.random() * window.innerWidth + 'px';
+    star.style.top = '-5px';
+    
+    // Random animation duration
+    const duration = 8 + Math.random() * 15;
+    star.style.animation = `starFloat ${duration}s linear`;
+    
+    document.body.appendChild(star);
+    
+    // Remove star after animation
+    setTimeout(() => {
+      star.remove();
+    }, duration * 1000);
+  }, 50); // Create new star more frequently
+}
+
+// Initialize effects when page loads
+window.addEventListener('load', () => {
+  createCursorLight();
+  createStars();
+});
+
+
+</script>
+
+</body>
+</html>
