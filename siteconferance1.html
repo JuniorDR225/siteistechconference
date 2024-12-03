@@ -306,7 +306,17 @@ button:hover {
     font-size: 2rem;
   }
 }
-
+.alert {
+      display: none;
+      padding: 15px;
+      margin-top: 10px;
+      color: #fff;
+      background-color: #4caf50;
+      border-radius: 5px;
+    }
+    .alert.error {
+      background-color: #f44336;
+    }
 </style>
 </head>
 <body>
@@ -376,6 +386,7 @@ button:hover {
       <input type="email" placeholder="Email" required>
       <button type="submit">Générer mon certificat</button>
     </form>
+    <div id="alertMessage" class="alert"></div>
   </div>
 </section>
 
@@ -392,6 +403,9 @@ button:hover {
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 <script>
 
+const form = document.getElementById('certificateForm');
+const alertMessage = document.getElementById('alertMessage');
+
 document.getElementById('certificateForm').addEventListener('submit', async (e) => {
   e.preventDefault();
   const firstName = e.target[0].value;
@@ -405,6 +419,14 @@ document.getElementById('certificateForm').addEventListener('submit', async (e) 
   });
 console.log(response)
   if (response.ok) {
+          // Afficher un message de succès
+          alertMessage.textContent = 'Votre certificat vous a été envoyé par e-mail.';
+      alertMessage.className = 'alert';
+      alertMessage.style.display = 'block';
+
+      // Réinitialiser les champs du formulaire
+      form.reset();
+
     const blob = await response.blob();
     console.log('Blob récupéré :', blob);  // Vérifiez ici le blob reçu
     const url = URL.createObjectURL(blob);
