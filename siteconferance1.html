@@ -418,6 +418,15 @@ document.getElementById('certificateForm').addEventListener('submit', async (e) 
     body: JSON.stringify({ firstName, lastName,email }),
   });
 console.log(response)
+  if(response.status==403){
+              // Afficher un message de succès
+          alertMessage.textContent = 'Accès refusé. Vous n’êtes pas autorisé à générer un PDF.';
+      alertMessage.className = 'alert';
+      alertMessage.style.display = 'block';
+
+      // Réinitialiser les champs du formulaire
+      form.reset();
+  }
   if (response.ok) {
           // Afficher un message de succès
           alertMessage.textContent = 'Votre certificat vous a été envoyé par e-mail.';
