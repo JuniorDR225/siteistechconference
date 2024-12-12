@@ -456,6 +456,21 @@ img, svg, i {
 </audio>
 
 <script>
+
+  <script>
+  document.addEventListener('DOMContentLoaded', function () {
+    // Sélectionne tous les éléments de type input (par exemple les champs de texte pour les noms)
+    const inputs = document.querySelectorAll('input[type="text"], input[type="name"]');
+
+    inputs.forEach(input => {
+      input.addEventListener('blur', function () {
+        // Trim les espaces au début et à la fin lorsque l'input perd le focus
+        this.value = this.value.trim();
+      });
+    });
+  });
+</script>
+
 function createConfetti() {
   const confetti = document.querySelector('.confetti');
   const colors = ['#FFF', '#FFD700', '#FF69B4', '#2ECC71', '#FF4E50'];
