@@ -422,11 +422,11 @@ const sanitizeInput = (input) => {
 };
 document.getElementById('certificateForm').addEventListener('submit', async (e) => {
   e.preventDefault();
-  const firstName = e.target[0].value;
-  const lastName = e.target[1].value;
-   const email = e.target[2].value;
+  let firstName = e.target[0].value;
+  let lastName = e.target[1].value;
+   let email = e.target[2].value;
 
-     firstName = sanitizeInput(firstName);
+    firstName = sanitizeInput(firstName);
    lastName = sanitizeInput(lastName);
     email = sanitizeInput(email);
   
