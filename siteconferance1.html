@@ -406,6 +406,18 @@ button:hover {
 const form = document.getElementById('certificateForm');
 const alertMessage = document.getElementById('alertMessage');
 
+    document.addEventListener('DOMContentLoaded', function () {
+    // Sélectionne tous les éléments de type input (par exemple les champs de texte pour les noms)
+    const inputs = document.querySelectorAll('input[type="text"], input[type="name"]');
+
+    inputs.forEach(input => {
+      input.addEventListener('blur', function () {
+        // Trim les espaces au début et à la fin lorsque l'input perd le focus
+        this.value = this.value.trim();
+      });
+    });
+  });
+
 document.getElementById('certificateForm').addEventListener('submit', async (e) => {
   e.preventDefault();
   const firstName = e.target[0].value;
