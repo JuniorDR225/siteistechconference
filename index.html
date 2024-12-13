@@ -1,3 +1,28 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vérification via URL</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        #result {
+            margin-top: 20px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>Vérification de l'Identifiant</h1>
+    <div id="result">Traitement en cours...</div>
+
+
+<script>
 // Fonction pour extraire l'identifiant depuis les paramètres de l'URL
 function getIdFromUrl() {
     const urlParams = new URLSearchParams(window.location.search);
@@ -14,7 +39,7 @@ function verifyId() {
         return;
     }
 
-    fetch("/verify", {
+    fetch("https://api-2024-istech-meet-chill.onrender.com/verify", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -37,3 +62,6 @@ function verifyId() {
 
 // Appel de la fonction au chargement de la page
 verifyId();
+    </script>
+</body>
+</html>
