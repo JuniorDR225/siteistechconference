@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scan QR Code</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        video {
+            width: 100%;
+            max-width: 400px;
+        }
+        #result {
+            margin-top: 20px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>Scanner un QR Code</h1>
+    <video id="qr-video" autoplay></video>
+    <div id="result"></div>
+
+    <!-- Inclusion de la bibliothèque QR Code -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jsQR/1.3.2/jsQR.min.js"></script>
+    <script src="script.js"></script>
+</body>
+
+<script>
+    const video = document.getElementById("qr-video");
+const resultDiv = document.getElementById("result");
+
+// Accéder à la webcam
+navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } }).then((stream) => {
+    video.srcObject = stream;
+    video.play();
+});
+
+// Capturer le QR code à partir du flux vidéo
+function scanQRCode() {
+    const canvas = document.createElement("canvas");
+    const context = canvas.getContext("2d");
+
+    context.drawImage(video, 0, 0, canvas.width, canvas.height);
+    const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+    const code = jsQR(imageData.data, canvas.width, canvas.height);
+
+    if (code) {
+        const qrData = code.data;
+        resultDiv.textContent = `Données du QR Code : ${qrData}`;
+        checkInDatabase(qrData);
+        console.log(qrData)
+    }
+    requestAnimationFrame(scanQRCode);
+}
+
+// Fonction pour envoyer les données au serveur
+function checkInDatabase(qrData) {
+    fetch("/verify", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ qrData }),
+    })
+        .then((response) => response.json())
+        .then((data) => {
+            if (data.exists) {
+                resultDiv.textContent = "✅ QR Code valide : Existe dans la base de données.";
+            } else {
+                resultDiv.textContent = "❌ QR Code invalide : N'existe pas dans la base de données.";
+            }
+        })
+        .catch((error) => {
+            console.error("Erreur :", error);
+            resultDiv.textContent = "❌ Erreur de connexion au serveur.";
+        });
+}
+
+// Lancer le scan en boucle
+scanQRCode();
+
+</script>
+</html>
