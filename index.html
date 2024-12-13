@@ -1,62 +1,39 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vérification via URL</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            margin-top: 50px;
-        }
-        #result {
-            margin-top: 20px;
-            font-size: 20px;
-            font-weight: bold;
-        }
-    </style>
-</head>
-<body>
-    <h1>Vérification de l'Identifiant</h1>
-    <div id="result">Traitement en cours...</div>
+// Fonction pour extraire l'identifiant depuis les paramètres de l'URL
+function getIdFromUrl() {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get("id");  // Récupère la valeur du paramètre 'id'
+}
 
-    <script>
-        // Fonction pour extraire l'identifiant de l'URL
-        function getIdFromUrl() {
-            const url = window.location.href;  // Exemple : http://junio.io/debordo.e/1234
-            const parts = url.split('/');       // Divise l'URL en segments
-            return parts[parts.length - 1];     // Récupère le dernier segment (l'identifiant)
+// Fonction pour envoyer l'identifiant au backend
+function verifyId() {
+    const id = getIdFromUrl();
+    const resultDiv = document.getElementById("result");
+
+    if (!id) {
+        resultDiv.textContent = "❌ Aucun identifiant fourni.";
+        return;
+    }
+
+    fetch("/verify", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ id: id }),
+    })
+    .then((response) => response.json())
+    .then((data) => {
+        if (data.exists) {
+            resultDiv.textContent = `✅ L'identifiant ${id} est valide : Existe dans la base de données.`;
+        } else {
+            resultDiv.textContent = `❌ L'identifiant ${id} est invalide : N'existe pas dans la base de données.`;
         }
+    })
+    .catch((error) => {
+        console.error("Erreur :", error);
+        resultDiv.textContent = "❌ Erreur de connexion au serveur.";
+    });
+}
 
-        // Fonction pour envoyer l'identifiant au backend
-        function verifyId() {
-            const id = getIdFromUrl();  // Récupérer l'identifiant depuis l'URL
-            const resultDiv = document.getElementById("result");
-
-            fetch("/verify", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({ id: id }),  // Envoyer l'identifiant en JSON
-            })
-            .then((response) => response.json())
-            .then((data) => {
-                if (data.exists) {
-                    resultDiv.textContent = `✅ L'identifiant ${id} est valide : Existe dans la base de données.`;
-                } else {
-                    resultDiv.textContent = `❌ L'identifiant ${id} est invalide : N'existe pas dans la base de données.`;
-                }
-            })
-            .catch((error) => {
-                console.error("Erreur :", error);
-                resultDiv.textContent = "❌ Erreur de connexion au serveur.";
-            });
-        }
-
-        // Appel de la fonction au chargement de la page
-        verifyId();
-    </script>
-</body>
-</html>
+// Appel de la fonction au chargement de la page
+verifyId();
