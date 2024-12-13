@@ -470,6 +470,7 @@ function updateResultWithAnimation(message, isSuccess) {
   }, 300);
 }
 
+// Fonction pour extraire l'identifiant depuis les paramètres de l'URL
 function getIdFromUrl() {
     const urlParams = new URLSearchParams(window.location.search);
     return urlParams.get("id");  // Récupère la valeur du paramètre 'id'
@@ -600,11 +601,13 @@ function adjustAudioPlayer() {
 // Call the function when the page loads
 window.addEventListener('load', adjustAudioPlayer);
 
-function getIdFromUrl() {
-  const urlParams = new URLSearchParams(window.location.search);
-  return urlParams.get('id');
-}
+// function getIdFromUrl() {
+//   const urlParams = new URLSearchParams(window.location.search);
+//   return urlParams.get('id');
+// }
 
 verifyId();
 </script>
+
+    
 </body></html>
