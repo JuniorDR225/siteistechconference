@@ -3,17 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Scan QR Code</title>
+    <title>Vérification via URL</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             text-align: center;
-            margin-top: 20px;
-        }
-        video {
-            width: 100%;
-            max-width: 400px;
-            border: 1px solid #ccc;
+            margin-top: 50px;
         }
         #result {
             margin-top: 20px;
@@ -23,52 +18,45 @@
     </style>
 </head>
 <body>
-    <h1>Scanner un QR Code</h1>
-    <video id="qr-video" autoplay></video>
-    <div id="result">En attente de scan...</div>
-
-    <!-- Inclusion de la bibliothèque jsQR -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jsQR/1.3.2/jsQR.min.js"></script>
+    <h1>Vérification de l'Identifiant</h1>
+    <div id="result">Traitement en cours...</div>
 
     <script>
-        const video = document.getElementById("qr-video");
-        const resultDiv = document.getElementById("result");
-
-        // Accéder à la webcam
-        navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } })
-            .then((stream) => {
-                video.srcObject = stream;
-            })
-            .catch((err) => {
-                console.error("Erreur d'accès à la webcam :", err);
-                resultDiv.textContent = "❌ Impossible d'accéder à la webcam.";
-            });
-
-        // Scanner le QR code en continu
-        function scanQRCode() {
-            const canvas = document.createElement("canvas");
-            const context = canvas.getContext("2d");
-
-            canvas.width = video.videoWidth;
-            canvas.height = video.videoHeight;
-
-            context.drawImage(video, 0, 0, canvas.width, canvas.height);
-            const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
-            const code = jsQR(imageData.data, canvas.width, canvas.height);
-
-            if (code) {
-                resultDiv.textContent = `✅ Données du QR Code : ${code.data}`;
-                console.log(code.data);
-            }
-
-            // Continuer le scan
-            requestAnimationFrame(scanQRCode);
+        // Fonction pour extraire l'identifiant de l'URL
+        function getIdFromUrl() {
+            const url = window.location.href;  // Exemple : http://junio.io/debordo.e/1234
+            const parts = url.split('/');       // Divise l'URL en segments
+            return parts[parts.length - 1];     // Récupère le dernier segment (l'identifiant)
         }
 
-        // Lancer le scan dès que la vidéo est prête
-        video.addEventListener("loadeddata", () => {
-            scanQRCode();
-        });
+        // Fonction pour envoyer l'identifiant au backend
+        function verifyId() {
+            const id = getIdFromUrl();  // Récupérer l'identifiant depuis l'URL
+            const resultDiv = document.getElementById("result");
+
+            fetch("/verify", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ id: id }),  // Envoyer l'identifiant en JSON
+            })
+            .then((response) => response.json())
+            .then((data) => {
+                if (data.exists) {
+                    resultDiv.textContent = `✅ L'identifiant ${id} est valide : Existe dans la base de données.`;
+                } else {
+                    resultDiv.textContent = `❌ L'identifiant ${id} est invalide : N'existe pas dans la base de données.`;
+                }
+            })
+            .catch((error) => {
+                console.error("Erreur :", error);
+                resultDiv.textContent = "❌ Erreur de connexion au serveur.";
+            });
+        }
+
+        // Appel de la fonction au chargement de la page
+        verifyId();
     </script>
 </body>
 </html>
