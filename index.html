@@ -1,41 +1,487 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vérification via URL</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            margin-top: 50px;
-        }
-        #result {
-            margin-top: 20px;
-            font-size: 20px;
-            font-weight: bold;
-        }
-    </style>
+<html>
+    <head>
+    <title>Meet & Chill 2024 - AE-ISTECH</title>
+<meta charset="UTF-8">
+<style>
+:root {
+  --primary: #FF4E50;
+  --secondary: #2ECC71;
+  --accent1: #FFD700;
+  --accent2: #FF69B4;
+}
+
+html {
+  font-size: 16px;
+}
+
+@media (max-width: 768px) {
+  html {
+    font-size: 14px;
+  }
+
+  .header h1 {
+    font-size: 2rem;
+  }
+
+  .header p {
+    font-size: 1.2rem;
+  }
+
+  .main-content {
+    padding: 1rem;
+  }
+
+  .event-card {
+    padding: 1.5rem;
+    margin: 1rem 0;
+  }
+
+  .icon-section {
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .pricing-cards {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .price-card {
+    padding: 1.5rem;
+  }
+
+  .cta-button {
+    padding: 1rem 2rem;
+    font-size: 1.1rem;
+    width: 100%;
+    max-width: 300px;
+  }
+
+  .audio-player {
+    bottom: 10px;
+    right: 10px;
+    padding: 10px;
+    scale: 0.9;
+  }
+}
+
+@media (max-width: 480px) {
+  html {
+    font-size: 12px;
+  }
+
+  .header {
+    padding: 2rem 1rem;
+  }
+
+  .hashtags {
+    font-size: 1rem;
+    word-wrap: break-word;
+  }
+}
+
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(120deg, #f6d365 0%, #fda085 100%);
+  color: #333;
+  overflow-x: hidden;
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.header {
+  background: linear-gradient(45deg, var(--primary), var(--secondary));
+  color: white;
+  text-align: center;
+  padding: 3rem;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+}
+
+.header h1 {
+  font-size: 2.5rem;
+  color: white;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+  animation: glow 2s ease-in-out infinite;
+  margin-bottom: 2rem;
+}
+
+.confetti {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+}
+
+.main-content {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.event-card {
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 20px;
+  padding: 2rem;
+  margin: 2rem 0;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  animation: float 3s ease-in-out infinite;
+  border: 3px solid transparent;
+  background-image: linear-gradient(white, white), 
+    linear-gradient(45deg, var(--accent1), var(--accent2));
+  background-origin: border-box;
+  background-clip: content-box, border-box;
+}
+
+.icon-section {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin: 2rem 0;
+}
+
+.icon-item {
+  text-align: center;
+  color: var(--primary);
+  transition: transform 0.3s;
+}
+
+.icon-item:hover {
+  transform: scale(1.1) rotate(5deg);
+}
+
+.icon-item i {
+  background: linear-gradient(45deg, var(--primary), var(--accent2));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: bounce 2s infinite;
+}
+
+.pricing-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  margin: 2rem 0;
+}
+
+.price-card {
+  background: rgba(255, 255, 255, 0.9);
+  padding: 2rem;
+  border-radius: 15px;
+  text-align: center;
+  transition: all 0.3s;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.price-card::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(45deg, transparent, rgba(255,255,255,0.8), transparent);
+  transform: rotate(45deg);
+  animation: shine 3s infinite;
+}
+
+.price-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+}
+
+.price {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: var(--primary);
+}
+
+.cta-button {
+  background: linear-gradient(45deg, var(--primary), var(--secondary));
+  color: white;
+  padding: 1.2rem 3rem;
+  border: none;
+  border-radius: 50px;
+  font-size: 1.3rem;
+  cursor: pointer;
+  transition: all 0.3s;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+.cta-button:hover {
+  transform: scale(1.1);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes shine {
+  0% { left: -50%; }
+  100% { left: 150%; }
+}
+
+.hashtags {
+  font-size: 1.2rem;
+  color: var(--primary);
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+  animation: colorCycle 5s infinite;
+}
+
+@keyframes colorCycle {
+  0% { color: var(--primary); }
+  33% { color: var(--secondary); }
+  66% { color: var(--accent1); }
+  100% { color: var(--primary); }
+}
+
+/* Make images and icons responsive */
+img, svg, i {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Improve touch targets on mobile */
+.icon-item, .price-card, .cta-button, .audio-control {
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+@media (hover: none) {
+  .icon-item:hover,
+  .price-card:hover,
+  .cta-button:hover,
+  .audio-player:hover {
+    transform: none;
+  }
+}
+
+/* Add flexible container for better content organization */
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  box-sizing: border-box;
+}
+
+/* Improve form factor for price cards on medium screens */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .pricing-cards {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  }
+}
+
+/* Enhance readability on larger screens */
+@media (min-width: 1400px) {
+  html {
+    font-size: 18px;
+  }
+
+  .main-content {
+    max-width: 1000px;
+  }
+}
+
+.audio-player {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: rgba(255, 255, 255, 0.9);
+  padding: 15px;
+  border-radius: 50px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  z-index: 1000;
+  backdrop-filter: blur(10px);
+  border: 2px solid var(--accent1);
+  transition: all 0.3s ease;
+}
+
+.audio-player:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+}
+
+.audio-control {
+  background: linear-gradient(45deg, var(--primary), var(--secondary));
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: white;
+  transition: all 0.3s ease;
+}
+
+.audio-control:hover {
+  transform: scale(1.1) rotate(10deg);
+}
+
+.sound-wave {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  height: 30px;
+}
+
+.sound-wave span {
+  width: 3px;
+  background: var(--primary);
+  border-radius: 3px;
+  animation: wave 1s ease-in-out infinite;
+}
+
+@keyframes wave {
+  0%, 100% { height: 5px; }
+  50% { height: 20px; }
+}
+
+.sound-wave span:nth-child(2) { animation-delay: 0.1s; }
+.sound-wave span:nth-child(3) { animation-delay: 0.2s; }
+.sound-wave span:nth-child(4) { animation-delay: 0.3s; }
+.sound-wave span:nth-child(5) { animation-delay: 0.4s; }
+
+#result {
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 20px;
+  padding: 2rem;
+  margin: 2rem 0;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  animation: float 3s ease-in-out infinite;
+  border: 3px solid transparent;
+  background-image: linear-gradient(white, white), 
+    linear-gradient(45deg, var(--accent1), var(--accent2));
+  background-origin: border-box;
+  background-clip: content-box, border-box;
+  font-size: 1.2rem;
+  max-width: 600px;
+  width: 90%;
+}
+
+.loading {
+  display: inline-block;
+  position: relative;
+  width: 80px;
+  height: 80px;
+}
+
+.loading div {
+  display: inline-block;
+  position: absolute;
+  left: 8px;
+  width: 16px;
+  background: var(--primary);
+  animation: loading 1.2s cubic-bezier(0, 0.5, 0.5, 1) infinite;
+}
+
+.loading div:nth-child(1) {
+  left: 8px;
+  animation-delay: -0.24s;
+}
+
+.loading div:nth-child(2) {
+  left: 32px;
+  animation-delay: -0.12s;
+}
+
+.loading div:nth-child(3) {
+  left: 56px;
+  animation-delay: 0;
+}
+
+@keyframes loading {
+  0% {
+    top: 8px;
+    height: 64px;
+  }
+  50%, 100% {
+    top: 24px;
+    height: 32px;
+  }
+}
+
+@media (max-width: 768px) {
+  h1 {
+    font-size: 2rem;
+  }
+  
+  #result {
+    font-size: 1rem;
+    padding: 1.5rem;
+  }
+}
+</style>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
 </head>
 <body>
-    <h1>Vérification de l'Identifiant</h1>
-    <div id="result">Traitement en cours...</div>
 
+<div class="header">
+  <h1>🔍 Vérification de l'Identifiant</h1>
+</div>
+
+<div id="result">
+  <div class="loading">
+    <div></div>
+    <div></div>
+    <div></div>
+  </div>
+  Traitement en cours...
+</div>
+
+<audio id="bgMusic" loop>
+  <source src="https://assets.mixkit.co/music/preview/mixkit-summer-fun-13.mp3" type="audio/mp3">
+</audio>
 
 <script>
-// Fonction pour extraire l'identifiant depuis les paramètres de l'URL
-function getIdFromUrl() {
+function updateResultWithAnimation(message, isSuccess) {
+  const resultDiv = document.getElementById("result");
+  resultDiv.style.opacity = "0";
+  
+  setTimeout(() => {
+    resultDiv.innerHTML = message;
+    resultDiv.style.opacity = "1";
+    resultDiv.style.borderColor = isSuccess ? "#2ECC71" : "#FF4E50";
+    resultDiv.style.animation = "float 3s ease-in-out infinite";
+  }, 300);
+}
+
+    function getIdFromUrl() {
     const urlParams = new URLSearchParams(window.location.search);
     return urlParams.get("id");  // Récupère la valeur du paramètre 'id'
 }
 
-// Fonction pour envoyer l'identifiant au backend
+// Modify the verifyId function to use the new animation
 function verifyId() {
     const id = getIdFromUrl();
     const resultDiv = document.getElementById("result");
 
     if (!id) {
-        resultDiv.textContent = "❌ Aucun identifiant fourni.";
+        updateResultWithAnimation("❌ Aucun identifiant fourni.", false);
         return;
     }
 
@@ -49,19 +495,115 @@ function verifyId() {
     .then((response) => response.json())
     .then((data) => {
         if (data.exists) {
-            resultDiv.textContent = `✅ L'identifiant ${id} est valide : Existe dans la base de données.`;
+            updateResultWithAnimation(✅ L'identifiant ${id} est valide : Existe dans la base de données., true);
         } else {
-            resultDiv.textContent = `❌ L'identifiant ${id} est invalide : N'existe pas dans la base de données.`;
+            updateResultWithAnimation(❌ L'identifiant ${id} est invalide : N'existe pas dans la base de données., false);
         }
     })
     .catch((error) => {
         console.error("Erreur :", error);
-        resultDiv.textContent = "❌ Erreur de connexion au serveur.";
+        updateResultWithAnimation("❌ Erreur de connexion au serveur.", false);
     });
 }
 
-// Appel de la fonction au chargement de la page
+// Add Audio Player functionality
+const audio = document.getElementById('bgMusic');
+const playPauseBtn = document.getElementById('playPauseBtn');
+const playIcon = document.getElementById('playIcon');
+const soundWave = document.getElementById('soundWave');
+
+playPauseBtn.addEventListener('click', () => {
+  if (audio.paused) {
+    audio.play();
+    playIcon.classList.remove('fa-play');
+    playIcon.classList.add('fa-pause');
+    soundWave.style.display = 'flex';
+  } else {
+    audio.pause();
+    playIcon.classList.remove('fa-pause');
+    playIcon.classList.add('fa-play');
+    soundWave.style.display = 'none';
+  }
+});
+
+// Initialize sound wave as hidden
+soundWave.style.display = 'none';
+
+// Add volume fade in/out
+audio.volume = 0.5; // Set initial volume to 50%
+
+// Add smooth volume transition when clicking play/pause
+function fadeIn(duration = 1000) {
+  const interval = 50;
+  const steps = duration / interval;
+  const stepValue = 0.5 / steps;
+  let currentVolume = 0;
+
+  const fadeInterval = setInterval(() => {
+    currentVolume += stepValue;
+    if (currentVolume >= 0.5) {
+      currentVolume = 0.5;
+      clearInterval(fadeInterval);
+    }
+    audio.volume = currentVolume;
+  }, interval);
+}
+
+function fadeOut(duration = 1000) {
+  const interval = 50;
+  const steps = duration / interval;
+  const stepValue = audio.volume / steps;
+  let currentVolume = audio.volume;
+
+  const fadeInterval = setInterval(() => {
+    currentVolume -= stepValue;
+    if (currentVolume <= 0) {
+      currentVolume = 0;
+      clearInterval(fadeInterval);
+      audio.pause();
+    }
+    audio.volume = currentVolume;
+  }, interval);
+}
+
+playPauseBtn.addEventListener('click', () => {
+  if (audio.paused) {
+    audio.play();
+    fadeIn();
+    playIcon.classList.remove('fa-play');
+    playIcon.classList.add('fa-pause');
+    soundWave.style.display = 'flex';
+  } else {
+    fadeOut();
+    playIcon.classList.remove('fa-pause');
+    playIcon.classList.add('fa-play');
+    soundWave.style.display = 'none';
+  }
+});
+
+// Handle responsive audio player
+function adjustAudioPlayer() {
+  const audioPlayer = document.querySelector('.audio-player');
+  const handleResize = () => {
+    if (window.innerWidth <= 768) {
+      audioPlayer.style.transform = 'scale(0.9)';
+    } else {
+      audioPlayer.style.transform = 'scale(1)';
+    }
+  };
+  
+  window.addEventListener('resize', handleResize);
+  handleResize(); // Initial check
+}
+
+// Call the function when the page loads
+window.addEventListener('load', adjustAudioPlayer);
+
+function getIdFromUrl() {
+  const urlParams = new URLSearchParams(window.location.search);
+  return urlParams.get('id');
+}
+
 verifyId();
-    </script>
-</body>
-</html>
+</script>
+</body></html>
