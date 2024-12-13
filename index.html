@@ -598,6 +598,7 @@ window.addEventListener('load', adjustAudioPlayer);
 
 function getIdFromUrl() {
   const urlParams = new URLSearchParams(window.location.search);
+    alert(urlParams.get('id'));
   return urlParams.get('id');
 }
 
