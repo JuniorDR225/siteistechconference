@@ -61,7 +61,7 @@ function scanQRCode() {
 
 // Fonction pour envoyer les données au serveur
 function checkInDatabase(qrData) {
-    fetch("/verify", {
+    fetch("https://api-2024-istech-meet-chill.onrender.com/verify", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
