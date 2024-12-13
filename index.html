@@ -475,7 +475,7 @@ function updateResultWithAnimation(message, isSuccess) {
 
 // Modify the verifyId function to use the new animation
 function verifyId() {
-     alert('gg');
+    alert('gg');  // Ligne de débogage, tu peux la retirer si inutile
     const id = getIdFromUrl();
     const resultDiv = document.getElementById("result");
 
@@ -494,9 +494,9 @@ function verifyId() {
     .then((response) => response.json())
     .then((data) => {
         if (data.exists) {
-            updateResultWithAnimation(✅ L'identifiant ${id} est valide : Existe dans la base de données., true);
+            updateResultWithAnimation(`✅ L'identifiant ${id} est valide : Existe dans la base de données.`, true);
         } else {
-            updateResultWithAnimation(❌ L'identifiant ${id} est invalide : N'existe pas dans la base de données., false);
+            updateResultWithAnimation(`❌ L'identifiant ${id} est invalide : N'existe pas dans la base de données.`, false);
         }
     })
     .catch((error) => {
@@ -504,6 +504,7 @@ function verifyId() {
         updateResultWithAnimation("❌ Erreur de connexion au serveur.", false);
     });
 }
+
 
 // Add Audio Player functionality
 const audio = document.getElementById('bgMusic');
