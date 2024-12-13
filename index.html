@@ -474,6 +474,7 @@ function updateResultWithAnimation(message, isSuccess) {
 
 // Modify the verifyId function to use the new animation
 function verifyId() {
+     alert('gg');
     const id = getIdFromUrl();
     const resultDiv = document.getElementById("result");
 
@@ -598,7 +599,7 @@ window.addEventListener('load', adjustAudioPlayer);
 
 function getIdFromUrl() {
   const urlParams = new URLSearchParams(window.location.search);
-    alert(urlParams.get('id'));
+   
   return urlParams.get('id');
 }
 
