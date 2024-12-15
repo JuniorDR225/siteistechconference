@@ -491,10 +491,10 @@ fetch("https://api-2024-istech-meet-chill.onrender.com/verify", {
 .then((data) => {
     if (data.success) {
         // Si la vérification réussit
-        updateResultWithAnimation( true,`✅ ${data.message}`);
+        updateResultWithAnimation( `✅ ${data.message}`,true);
     } else {
         // Si le code est invalide ou déjà utilisé
-        updateResultWithAnimation(false,`❌ ${data.message}`);
+        updateResultWithAnimation(`❌ ${data.message}`,false);
     }
 })
 .catch((error) => {
